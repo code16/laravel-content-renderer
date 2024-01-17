@@ -1,6 +1,6 @@
 <?php
 
-namespace Code16\LaravelContentRenderer\Support;
+namespace Code16\ContentRenderer\Support;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;

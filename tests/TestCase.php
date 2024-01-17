@@ -1,10 +1,10 @@
 <?php
 
-namespace Code16\LaravelContentRenderer\Tests;
+namespace Code16\ContentRenderer\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Code16\LaravelContentRenderer\ContentRendererServiceProvider;
+use Code16\ContentRenderer\ContentRendererServiceProvider;
 
 class TestCase extends Orchestra
 {

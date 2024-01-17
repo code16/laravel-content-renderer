@@ -1,6 +1,6 @@
 <?php
 
-namespace Code16\LaravelContentRenderer\View\Components;
+namespace Code16\ContentRenderer\View\Components;
 
 use Illuminate\View\Component;
 use Illuminate\View\ComponentAttributeBag;

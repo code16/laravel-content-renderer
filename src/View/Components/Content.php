@@ -1,9 +1,9 @@
 <?php
 
-namespace Code16\LaravelContentRenderer\View\Components;
+namespace Code16\ContentRenderer\View\Components;
 
 
-use Code16\LaravelContentRenderer\Support\ComponentAttributeBagCollection;
+use Code16\ContentRenderer\Support\ComponentAttributeBagCollection;
 use Illuminate\View\Component;
 
 abstract class Content extends Component

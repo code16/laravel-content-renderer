@@ -1,25 +1,19 @@
 <?php
 
-namespace Code16\LaravelContentRenderer;
+namespace Code16\ContentRenderer;
 
 use Illuminate\Support\Facades\Blade;
-use Spatie\LaravelPackageTools\Package;
-use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
-class ContentRendererServiceProvider extends PackageServiceProvider
+class ContentRendererServiceProvider extends ServiceProvider
 {
-    public function configurePackage(Package $package): void
+    public function register()
     {
-        /*
-         * This class is a Package Service Provider
-         *
-         * More info: https://github.com/spatie/laravel-package-tools
-         */
-        $package
-            ->name('laravel-content-renderer')
-            ->hasConfigFile()
-            ->hasViews('content');
+    }
 
-        Blade::componentNamespace('Code16\\LaravelContentRenderer\\View\\Components', 'content');
+    public function boot()
+    {
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'content');
+        Blade::componentNamespace('Code16\\ContentRenderer\\View\\Components', 'content');
     }
 }

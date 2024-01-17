@@ -1,9 +1,9 @@
 <?php
 
-namespace Code16\LaravelContentRenderer\View\Components;
+namespace Code16\ContentRenderer\View\Components;
 
-use Code16\LaravelContentRenderer\Support\Fragment;
-use Code16\LaravelContentRenderer\Support\FragmentsFactory;
+use Code16\ContentRenderer\Support\Fragment;
+use Code16\ContentRenderer\Support\FragmentsFactory;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 use Illuminate\View\View;
