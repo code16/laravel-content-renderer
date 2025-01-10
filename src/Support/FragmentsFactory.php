@@ -11,7 +11,7 @@ class FragmentsFactory
     public function fromHTML(string $html): Collection
     {
         $doc = new \DOMDocument();
-        $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
+        $html = mb_encode_numericentity($html, [0x80, 0x10FFFF, 0, ~0], 'UTF-8');
 
         libxml_use_internal_errors(true);
         $doc->loadHTML("<body>$html</body>");
