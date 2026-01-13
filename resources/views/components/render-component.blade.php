@@ -1,5 +1,5 @@
 @aware([
-    'contentComponent'
+    'contentComponent' => null
 ])
 <x-dynamic-component
     :component="$fragment->getComponentName()"

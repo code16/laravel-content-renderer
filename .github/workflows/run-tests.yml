@@ -17,13 +17,26 @@ jobs:
       fail-fast: true
       matrix:
         os: [ubuntu-latest, windows-latest]
-        php: [8.3, 8.2, 8.1]
-        laravel: [10.*]
+        php: [8.5, 8.4, 8.3, 8.2]
+        laravel: [10.*, 11.*, 12.*]
         stability: [prefer-stable]
         include:
-          - laravel: 10.*
-            testbench: 8.*
-            carbon: ^2.63
+          - laravel: '10.*'
+            testbench: '8.*'
+            carbon: '^2.72.6'
+          - laravel: '11.*'
+            testbench: '9.*'
+            carbon: '^2.72.6'
+          - laravel: '12.*'
+            testbench: '10.*'
+            carbon: '^3.8.4'
+        exclude:
+          # Laravel 10 does not support PHP 8.5
+          # We also do not want to support Laravel 11 for PHP 8.5
+          - laravel: '10.*'
+            php: 8.5
+          - laravel: '11.*'
+            php: 8.5
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
@@ -44,12 +57,17 @@ jobs:
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
       - name: Install dependencies
+        env:
+          RAY_ENABLED: false
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" "nesbot/carbon:${{ matrix.carbon }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+
+      - name: Run Security Audit
+        run: composer audit
 
       - name: List Installed Dependencies
         run: composer show -D
 
       - name: Execute tests
-        run: vendor/bin/pest --ci
+        run: vendor/bin/pest --ci --no-coverage

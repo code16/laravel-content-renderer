@@ -14,12 +14,12 @@ class RenderComponent extends Component
     ) {
     }
 
-    public function resolveAttributes(Content $content): ComponentAttributeBag
+    public function resolveAttributes(?Content $content): ComponentAttributeBag
     {
         $componentName = $this->fragment->getComponentName();
         $attributes = new ComponentAttributeBag($this->fragment->getComponentAttributes());
 
-        if ($contentAttributes = $content->contentComponentAttributes->get($componentName)) {
+        if ($content && ($contentAttributes = $content->contentComponentAttributes->get($componentName))) {
             $attributes = $attributes->merge($contentAttributes->getAttributes());
         }
 
