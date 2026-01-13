@@ -32,7 +32,10 @@ jobs:
             carbon: '^3.0'
         exclude:
           # Laravel 10 does not support PHP 8.5
+          # We also do not want to support Laravel 11 for PHP 8.5
           - laravel: '10.*'
+            php: 8.5
+          - laravel: '11.*'
             php: 8.5
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
