@@ -29,7 +29,7 @@ jobs:
             carbon: '^2.72.6'
           - laravel: '12.*'
             testbench: '10.*'
-            carbon: '^3.0'
+            carbon: '^3.8.4'
         exclude:
           # Laravel 10 does not support PHP 8.5
           # We also do not want to support Laravel 11 for PHP 8.5
