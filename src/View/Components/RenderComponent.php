@@ -2,6 +2,7 @@
 
 namespace Code16\ContentRenderer\View\Components;
 
+use Code16\ContentRenderer\Support\ComponentAttributeBagCollection;
 use Code16\ContentRenderer\Support\ComponentFragment;
 use Illuminate\View\Component;
 use Illuminate\View\ComponentAttributeBag;
@@ -20,7 +21,7 @@ class RenderComponent extends Component
         $attributes = new ComponentAttributeBag($this->fragment->getComponentAttributes());
 
         if ($content && ($contentAttributes = $content->contentComponentAttributes->get($componentName))) {
-            $attributes = $attributes->merge($contentAttributes->getAttributes());
+            $attributes = ComponentAttributeBagCollection::mergeAttributes($attributes, $contentAttributes->getAttributes());
         }
 
         return $attributes;

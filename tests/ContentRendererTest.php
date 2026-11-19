@@ -129,6 +129,28 @@ it('allows Content component to provide extra attributes', function () {
         ->toContain('<div>Component: Base Title (Extra: from-content)</div>');
 });
 
+it('allows Content component to provide closure attributes', function () {
+    Blade::component('test-formatter-component', \Code16\ContentRenderer\Tests\TestComponentWithFormatter::class);
+    Blade::component('content', \Code16\ContentRenderer\Tests\TestContent::class);
+    Blade::component('content-attributes', \Code16\ContentRenderer\Tests\TestAttributes::class);
+
+    $rendered = Blade::render(
+        '<x-content><x-content-attributes component="test-formatter-component" :formatter="fn ($title) => strtoupper($title)" />{!! $content !!}</x-content>',
+        ['content' => '<x-test-formatter-component title="Base Title" />']
+    );
+
+    expect($rendered)->toContain('<div>Component: BASE TITLE</div>');
+});
+
+it('merges closure attributes provided several times for the same component', function () {
+    $collection = new \Code16\ContentRenderer\Support\ComponentAttributeBagCollection();
+    $collection->put('test-component', ['formatter' => fn ($title) => strtoupper($title)]);
+    $collection->put('test-component', ['extra' => 'from-content']);
+
+    expect($collection->get('test-component')->get('formatter'))->toBeInstanceOf(\Closure::class)
+        ->and($collection->get('test-component')->get('extra'))->toBe('from-content');
+});
+
 it('handles multiple components of the same type', function() {
     $factory = new FragmentsFactory();
     $fragments = $factory->fromHTML('<x-test-component id="1" /><x-test-component id="2" />');
@@ -160,6 +182,16 @@ class TestComponentWithExtra extends \Illuminate\View\Component
 {
     public function __construct(public string $title, public string $extra = 'default') {}
     public function render() { return '<div>Component: {{ $title }} (Extra: {{ $extra }})</div>'; }
+}
+
+class TestComponentWithFormatter extends \Illuminate\View\Component
+{
+    public function __construct(public string $title, public ?\Closure $formatter = null) {}
+    public function render() { return '<div>Component: {{ ($formatter)($title) }}</div>'; }
+}
+
+class TestAttributes extends \Code16\ContentRenderer\View\Components\Attributes
+{
 }
 
 class TestContent extends \Code16\ContentRenderer\View\Components\Content
